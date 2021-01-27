@@ -1,5 +1,6 @@
 package com.lotech.musicshare;
 
+import com.lotech.musicshare.lib.PlaylistInvalidError;
 import com.lotech.musicshare.playlists.Playlist;
 import com.lotech.musicshare.playlists.PlaylistRepository;
 import com.lotech.musicshare.playlists.PlaylistService;
@@ -25,14 +26,14 @@ public class PlaylistServiceTest {
     }
 
     @Test
-    void savePlaylist() {
+    void savePlaylist() throws PlaylistInvalidError {
         assertThat(playlist.getId()).isNull();
         service.save(playlist);
         assertThat(playlist.getId()).isNotNull();
     }
 
     @Test
-    void getById() {
+    void getById() throws PlaylistInvalidError {
         service.save(playlist);
         Playlist response = service.getById(playlist.getId());
         assertThat(response.getTitle()).isEqualTo(playlist.getTitle());

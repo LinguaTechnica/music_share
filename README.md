@@ -9,7 +9,7 @@ Use the stories and acceptance criteria to develop the Playlist Service.
 1. Fork [this repository]().
 1. Share your new repository with your group. One repo per group!
 1. Submit the link to your repository below.
-1. Submit the URL to your live app.
+1. Submit the URL to: your Docker Hub image and/or your live app.
 
 ### Requirements
 
@@ -17,15 +17,16 @@ The following features are required.
 
 - Version your api
 - Must have integration tests.
+- `Dockerfile`
 - Deploy your application.
 
 ## Acceptance Tests
 
 - Playlists are empty on creation.
+- Playlists have many songs.
 - Songs can be added to and removed from a playlist.
 - Playlists are named.
 - Playlists are unique.
-- Playlists can have an unlimited number of songs.
 
 ```gherkin
 When a playlist is created with a name

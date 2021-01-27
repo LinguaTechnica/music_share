@@ -1,5 +1,6 @@
 package com.lotech.musicshare.playlists;
 
+import com.lotech.musicshare.lib.SongNotFoundException;
 import com.lotech.musicshare.songs.Song;
 
 import javax.persistence.*;
@@ -30,8 +31,10 @@ public class Playlist {
         songs.add(song);
     }
 
-    public void removeSong(Song song) {
-        songs.removeIf(s -> s.getId().equals(song.getId()));
+    public void removeSong(Song song) throws SongNotFoundException {
+        if (!songs.removeIf(s -> s.getId().equals(song.getId()))) {
+            throw new SongNotFoundException("That song isn't on the playlist.");
+        }
     }
 
     public Long getId() {
