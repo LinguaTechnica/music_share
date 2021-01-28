@@ -22,8 +22,7 @@ public class PlaylistController {
     @GetMapping("{playlistId}")
     public Playlist getPlaylistById(@PathVariable Long playlistId) throws PlaylistNotFoundError {
         try {
-            Playlist playlist = service.getById(playlistId);
-            return playlist;
+            return service.getById(playlistId);
         } catch (NoSuchElementException exc) {
             throw new PlaylistNotFoundError("Playlist was not found.");
         }
@@ -38,23 +37,19 @@ public class PlaylistController {
         }
     }
 
-    @PutMapping("{playlistId}/songs")
-    public Playlist addSongToPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
+    @DeleteMapping("{playlistId}/songs")
+    public Playlist removeSongFromPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
         try {
-            Playlist playlist = service.getById(playlistId);
-            playlist.addSong(song);
-            return service.save(playlist);
+            return service.removeSong(playlistId, song);
         } catch(Exception exc) {
             throw new SongNotFoundException(exc.getMessage());
         }
     }
 
-    @DeleteMapping("{playlistId}/songs")
-    public Playlist removeSongFromPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
+    @PutMapping("{playlistId}/songs")
+    public Playlist addSongToPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
         try {
-            Playlist playlist = service.getById(playlistId);
-            playlist.removeSong(song);
-            return service.save(playlist);
+            return service.addSong(playlistId, song);
         } catch (Exception exc) {
             throw new SongNotFoundException((exc.getMessage()));
         }
