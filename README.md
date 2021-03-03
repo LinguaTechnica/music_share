@@ -1,6 +1,12 @@
 # Music Share
+[![Gradle Build and Tests](https://github.com/LinguaTechnica/music_share/actions/workflows/gradle.yml/badge.svg)](https://linguatechnica.github.io/music_share/index.html) | [![Heroku CICD Pipeline](https://github.com/LinguaTechnica/music_share/actions/workflows/heroku.yml/badge.svg)](https://musicshare-app.herokuapp.com/swager-ui.html)
 
 Music Share is a playlist service where users can create music lists and share them with others.
+
+### Interactive Demo
+
+- View test coverage report: https://linguatechnica.github.io/music_share/index.html
+- Live application: https://musicshare-app.herokuapp.com/swager-ui.html
 
 ## Instructions
 

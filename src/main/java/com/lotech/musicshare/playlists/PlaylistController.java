@@ -4,6 +4,7 @@ import com.lotech.musicshare.lib.PlaylistInvalidError;
 import com.lotech.musicshare.lib.PlaylistNotFoundError;
 import com.lotech.musicshare.lib.SongNotFoundException;
 import com.lotech.musicshare.songs.Song;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -11,6 +12,7 @@ import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("api/v1/playlists")
+@Api
 public class PlaylistController {
     private final PlaylistService service;
 
