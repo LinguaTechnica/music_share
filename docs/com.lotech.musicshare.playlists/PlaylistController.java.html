@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PlaylistController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">musicshare</a> &gt; <a href="index.source.html" class="el_package">com.lotech.musicshare.playlists</a> &gt; <span class="el_source">PlaylistController.java</span></div><h1>PlaylistController.java</h1><pre class="source lang-java linenums">package com.lotech.musicshare.playlists;
+
+import com.lotech.musicshare.lib.PlaylistInvalidError;
+import com.lotech.musicshare.lib.PlaylistNotFoundError;
+import com.lotech.musicshare.lib.SongNotFoundException;
+import com.lotech.musicshare.songs.Song;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.NoSuchElementException;
+
+@RestController
+@RequestMapping(&quot;api/v1/playlists&quot;)
+@Api
+public class PlaylistController {
+    private final PlaylistService service;
+
+    @Autowired
+<span class="fc" id="L20">    public PlaylistController (PlaylistService service) {</span>
+<span class="fc" id="L21">        this.service = service;</span>
+<span class="fc" id="L22">    }</span>
+
+    @GetMapping(&quot;{playlistId}&quot;)
+    public Playlist getPlaylistById(@PathVariable Long playlistId) throws PlaylistNotFoundError {
+        try {
+<span class="fc" id="L27">            return service.getById(playlistId);</span>
+<span class="nc" id="L28">        } catch (NoSuchElementException exc) {</span>
+<span class="nc" id="L29">            throw new PlaylistNotFoundError(&quot;Playlist was not found.&quot;);</span>
+        }
+    }
+
+    @PostMapping
+    public Playlist createNewPlaylist(@RequestBody Playlist playlist) throws PlaylistInvalidError {
+        try {
+<span class="fc" id="L36">            return service.save(playlist);</span>
+<span class="fc" id="L37">        } catch (Exception exc) {</span>
+<span class="fc" id="L38">            throw new PlaylistInvalidError(exc.getMessage());</span>
+        }
+    }
+
+    @DeleteMapping(&quot;{playlistId}/songs&quot;)
+    public Playlist removeSongFromPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
+        try {
+<span class="fc" id="L45">            return service.removeSong(playlistId, song);</span>
+<span class="fc" id="L46">        } catch(Exception exc) {</span>
+<span class="fc" id="L47">            throw new SongNotFoundException(exc.getMessage());</span>
+        }
+    }
+
+    @PutMapping(&quot;{playlistId}/songs&quot;)
+    public Playlist addSongToPlaylist(@PathVariable Long playlistId, @RequestBody Song song) throws SongNotFoundException {
+        try {
+<span class="fc" id="L54">            return service.addSong(playlistId, song);</span>
+<span class="fc" id="L55">        } catch (Exception exc) {</span>
+<span class="fc" id="L56">            throw new SongNotFoundException((exc.getMessage()));</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.5.201910111838</span></div></body></html>
