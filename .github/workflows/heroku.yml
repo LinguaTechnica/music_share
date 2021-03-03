@@ -2,8 +2,8 @@ name: Heroku CICD Pipeline
 
 on:
   # When PRs are merged, the push event is triggered for the target branch.
-#  push:
-#    branches: [ master ]
+  push:
+    branches: [ master ]
   workflow_dispatch:
 
 jobs:
@@ -12,7 +12,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Check out full repository and branches
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
       - name: Set up JDK 1.11
         uses: actions/setup-java@v1
         with:
@@ -21,6 +25,17 @@ jobs:
         run: chmod +x gradlew
       - name: Build and test with Gradle
         run: ./gradlew build
+      - name: Configure Github user
+        run: |
+          git config user.email "dev+musicshare@lotech.info"
+          git config user.name "Musicshare Bot"
+      - name: Publish test coverage report
+        run: |
+          cp -r build/reports/jacoco/test/html docs/
+          git add .
+          git commit -m "Publish coverage report."
+          git push origin master:coverage
+
   deploy:
     name: Deployment
     runs-on: ubuntu-latest
