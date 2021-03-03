@@ -25,16 +25,18 @@ jobs:
         run: chmod +x gradlew
       - name: Build and test with Gradle
         run: ./gradlew build
-      - name: Configure Github user
+      - name: Update coverage branch
         run: |
           git config user.email "dev+musicshare@lotech.info"
           git config user.name "Musicshare Bot"
+          git checkout coverage
+          git rebase master
       - name: Publish test coverage report
         run: |
           cp -r build/reports/jacoco/test/html docs/
           git add .
           git commit -m "Publish coverage report."
-          git push origin master:coverage
+          git push origin coverage
 
   deploy:
     name: Deployment
